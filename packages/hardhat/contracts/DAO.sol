@@ -92,6 +92,7 @@ contract DAO is AccessControl, ReentrancyGuard {
         newProposal.title = proposalTitle;
         newProposal.description = proposalDescription;
         newProposal.recipient = payable(recipientAddress);
+        newProposal.creator = msg.sender;
         newProposal.votingDeadline = block.timestamp + MIN_VOTE_DURATION;
 
         emit ProposalEvent(msg.sender, ROLE_STAKEHOLDER, "Proposal Created", recipientAddress, requestedAmount);
