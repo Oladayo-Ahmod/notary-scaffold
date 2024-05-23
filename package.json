@@ -44,6 +44,8 @@
     "node": ">=18.17.0"
   },
   "dependencies": {
+    "react-toastify": "^10.0.5",
+    "react-use-downloader": "^1.2.8",
     "sweetalert2": "^11.11.0"
   }
 }

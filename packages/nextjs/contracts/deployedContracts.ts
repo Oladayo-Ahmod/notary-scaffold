@@ -6,7 +6,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
   31337: {
-    DAO: {
+    Notary: {
       address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
       abi: [
         {
@@ -20,577 +20,169 @@ const deployedContracts = {
             {
               indexed: true,
               internalType: "address",
-              name: "creator",
+              name: "owner",
               type: "address",
             },
             {
+              indexed: true,
+              internalType: "string",
+              name: "documentHash",
+              type: "string",
+            },
+            {
               indexed: false,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
             },
             {
               indexed: false,
               internalType: "string",
-              name: "message",
+              name: "imageURI",
               type: "string",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "recipient",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "ProposalEvent",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "previousAdminRole",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "newAdminRole",
-              type: "bytes32",
-            },
-          ],
-          name: "RoleAdminChanged",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "sender",
-              type: "address",
-            },
-          ],
-          name: "RoleGranted",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "sender",
-              type: "address",
-            },
-          ],
-          name: "RoleRevoked",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "voter",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
             },
             {
               indexed: false,
               internalType: "string",
-              name: "message",
+              name: "description",
               type: "string",
             },
+          ],
+          name: "DocumentNotarized",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
             {
               indexed: true,
               internalType: "address",
-              name: "recipient",
+              name: "requester",
               type: "address",
             },
             {
-              indexed: false,
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
+              indexed: true,
+              internalType: "string",
+              name: "documentHash",
+              type: "string",
             },
             {
               indexed: false,
               internalType: "uint256",
-              name: "upVotes",
+              name: "timestamp",
               type: "uint256",
+            },
+          ],
+          name: "DocumentRetrieved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "string",
+              name: "documentHash",
+              type: "string",
             },
             {
               indexed: false,
               internalType: "uint256",
-              name: "downVotes",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "DocumentRevoked",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          name: "documents",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "timestamp",
               type: "uint256",
             },
             {
-              indexed: false,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "hash",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "imageURI",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "description",
+              type: "string",
+            },
+            {
               internalType: "bool",
-              name: "decision",
+              name: "revoked",
               type: "bool",
             },
           ],
-          name: "VoteEvent",
-          type: "event",
-        },
-        {
-          inputs: [],
-          name: "DEFAULT_ADMIN_ROLE",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
           stateMutability: "view",
           type: "function",
         },
         {
           inputs: [],
-          name: "contribute",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "payable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "string",
-              name: "proposalTitle",
-              type: "string",
-            },
-            {
-              internalType: "string",
-              name: "proposalDescription",
-              type: "string",
-            },
-            {
-              internalType: "address",
-              name: "recipientAddress",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "requestedAmount",
-              type: "uint256",
-            },
-          ],
-          name: "createProposal",
+          name: "getAllDocuments",
           outputs: [
             {
               components: [
-                {
-                  internalType: "uint256",
-                  name: "id",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "requestedAmount",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "upVotes",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "downVotes",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "votingDeadline",
-                  type: "uint256",
-                },
-                {
-                  internalType: "string",
-                  name: "title",
-                  type: "string",
-                },
-                {
-                  internalType: "string",
-                  name: "description",
-                  type: "string",
-                },
-                {
-                  internalType: "bool",
-                  name: "fundsPaid",
-                  type: "bool",
-                },
-                {
-                  internalType: "bool",
-                  name: "approved",
-                  type: "bool",
-                },
-                {
-                  internalType: "address payable",
-                  name: "recipient",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "creator",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "executor",
-                  type: "address",
-                },
-              ],
-              internalType: "struct DAO.Proposal",
-              name: "",
-              type: "tuple",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "proposalID",
-              type: "uint256",
-            },
-          ],
-          name: "executePayment",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getAllProposals",
-          outputs: [
-            {
-              components: [
-                {
-                  internalType: "uint256",
-                  name: "id",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "requestedAmount",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "upVotes",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "downVotes",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "votingDeadline",
-                  type: "uint256",
-                },
-                {
-                  internalType: "string",
-                  name: "title",
-                  type: "string",
-                },
-                {
-                  internalType: "string",
-                  name: "description",
-                  type: "string",
-                },
-                {
-                  internalType: "bool",
-                  name: "fundsPaid",
-                  type: "bool",
-                },
-                {
-                  internalType: "bool",
-                  name: "approved",
-                  type: "bool",
-                },
-                {
-                  internalType: "address payable",
-                  name: "recipient",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "creator",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "executor",
-                  type: "address",
-                },
-              ],
-              internalType: "struct DAO.Proposal[]",
-              name: "allProposals",
-              type: "tuple[]",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getContractBalance",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getContributorBalance",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getDeployer",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "proposalID",
-              type: "uint256",
-            },
-          ],
-          name: "getProposalByID",
-          outputs: [
-            {
-              components: [
-                {
-                  internalType: "uint256",
-                  name: "id",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "requestedAmount",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "upVotes",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "downVotes",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "votingDeadline",
-                  type: "uint256",
-                },
-                {
-                  internalType: "string",
-                  name: "title",
-                  type: "string",
-                },
-                {
-                  internalType: "string",
-                  name: "description",
-                  type: "string",
-                },
-                {
-                  internalType: "bool",
-                  name: "fundsPaid",
-                  type: "bool",
-                },
-                {
-                  internalType: "bool",
-                  name: "approved",
-                  type: "bool",
-                },
-                {
-                  internalType: "address payable",
-                  name: "recipient",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "creator",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "executor",
-                  type: "address",
-                },
-              ],
-              internalType: "struct DAO.Proposal",
-              name: "",
-              type: "tuple",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-          ],
-          name: "getRoleAdmin",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getStakeholderBalance",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getStakeholderVotes",
-          outputs: [
-            {
-              internalType: "uint256[]",
-              name: "",
-              type: "uint256[]",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "proposalID",
-              type: "uint256",
-            },
-          ],
-          name: "getVotesForProposal",
-          outputs: [
-            {
-              components: [
-                {
-                  internalType: "address",
-                  name: "voter",
-                  type: "address",
-                },
                 {
                   internalType: "uint256",
                   name: "timestamp",
                   type: "uint256",
                 },
                 {
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "hash",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "imageURI",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "description",
+                  type: "string",
+                },
+                {
                   internalType: "bool",
-                  name: "decision",
+                  name: "revoked",
                   type: "bool",
                 },
               ],
-              internalType: "struct DAO.Vote[]",
+              internalType: "struct Notary.Document[]",
               name: "",
               type: "tuple[]",
             },
@@ -601,177 +193,168 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
+              internalType: "string",
+              name: "_hash",
+              type: "string",
             },
             {
-              internalType: "address",
-              name: "account",
-              type: "address",
+              internalType: "string",
+              name: "_imageURI",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "_description",
+              type: "string",
             },
           ],
-          name: "grantRole",
+          name: "notarizeDocument",
           outputs: [],
           stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "hasRole",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
           type: "function",
         },
         {
           inputs: [],
-          name: "isContributor",
+          name: "owner",
           outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "isStakeholder",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
             {
               internalType: "address",
-              name: "account",
+              name: "",
               type: "address",
             },
           ],
-          name: "renounceRole",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "revokeRole",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes4",
-              name: "interfaceId",
-              type: "bytes4",
-            },
-          ],
-          name: "supportsInterface",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
           stateMutability: "view",
           type: "function",
         },
         {
           inputs: [
             {
-              internalType: "uint256",
-              name: "proposalID",
-              type: "uint256",
-            },
-            {
-              internalType: "bool",
-              name: "decision",
-              type: "bool",
+              internalType: "string",
+              name: "_hash",
+              type: "string",
             },
           ],
-          name: "voteOnProposal",
+          name: "retrieveDocument",
           outputs: [
             {
               components: [
-                {
-                  internalType: "address",
-                  name: "voter",
-                  type: "address",
-                },
                 {
                   internalType: "uint256",
                   name: "timestamp",
                   type: "uint256",
                 },
                 {
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "hash",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "imageURI",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "description",
+                  type: "string",
+                },
+                {
                   internalType: "bool",
-                  name: "decision",
+                  name: "revoked",
                   type: "bool",
                 },
               ],
-              internalType: "struct DAO.Vote",
+              internalType: "struct Notary.Document",
               name: "",
               type: "tuple",
             },
           ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_hash",
+              type: "string",
+            },
+          ],
+          name: "revokeDocument",
+          outputs: [],
           stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "userDocuments",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_hash",
+              type: "string",
+            },
+          ],
+          name: "verifyDocument",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
       ],
-      inheritedFunctions: {
-        DEFAULT_ADMIN_ROLE: "@openzeppelin/contracts/access/AccessControl.sol",
-        getRoleAdmin: "@openzeppelin/contracts/access/AccessControl.sol",
-        grantRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        hasRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        renounceRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        revokeRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        supportsInterface: "@openzeppelin/contracts/access/AccessControl.sol",
-      },
+      inheritedFunctions: {},
     },
   },
 } as const;
