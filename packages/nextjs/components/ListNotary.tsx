@@ -206,7 +206,7 @@ const ListNotary = () => {
             </div>
           ))
         ) : (
-          <p>You Have No document Available</p>
+          <p className="docs-h2">You Have No document Available</p>
         )}
       </div>
     </div>
