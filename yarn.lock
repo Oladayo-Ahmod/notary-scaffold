@@ -2151,6 +2151,8 @@ __metadata:
     react-copy-to-clipboard: ^5.1.0
     react-dom: ^18.2.0
     react-hot-toast: ^2.4.0
+    react-toastify: ^10.0.5
+    react-use-downloader: ^1.2.8
     tailwindcss: ^3.4.3
     type-fest: ^4.6.0
     typescript: ^5.1.6

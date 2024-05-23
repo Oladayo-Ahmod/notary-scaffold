@@ -1,3 +1,4 @@
+/* eslint-disable */
 const key = 'cbed2dfed63f25c2bded'
 const secret = '4b4b725feda7ef87619e032778c0ecd57170d475061a5fdf71eb378d50a55706'
 // export const testSecret = process.env.PINATA_SECRET
