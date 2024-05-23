@@ -20,9 +20,9 @@ Notary is a decentralized application (DApp) that facilitates the management and
 Notary DApp is built using the following technologies:
 
 - [Solidity](https://docs.soliditylang.org/): Programming language for Ethereum smart contracts.
-- [React next js](https://reactjs.org/): JavaScript library for building user interfaces.
+- [next js](https://reactjs.org/): JavaScript library for building user interfaces.
 - [TypeScript](https://www.typescriptlang.org): Strongly typed programming language that builds on JavaScript.
-- [Rainbowkit-celo](https://docs.celo.org/developer/rainbowkit-celo): React library for wallet connection in DApps.
+- [Scaffold-ETH 2](https://docs.scaffoldeth.io/): Scaffold eth 2 documentations.
 - [Wagmi](https://wagmi.sh): Collection of React Hooks for Ethereum development.
 - [Hardhat](https://hardhat.org/): Development environment for Ethereum smart contracts.
 - [Tailwind CSS](https://tailwindcss.com): CSS framework for styling web applications.
