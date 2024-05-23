@@ -18,8 +18,8 @@ import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 // import { ADDRESS, ABI } from "../app/abi/index"; // Import contract address and ABI
 
-const ABI = deployedContracts[31337].Notary.abi;
-const ADDRESS = deployedContracts[31337].Notary.address;
+const ABI = deployedContracts[44787].Notary.abi;
+const ADDRESS = deployedContracts[44787].Notary.address;
 
 interface NotaryDocument {
   // Define the structure of a Notary Document
