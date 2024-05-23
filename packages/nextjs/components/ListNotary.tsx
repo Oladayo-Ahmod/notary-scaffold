@@ -6,13 +6,17 @@ import { useConnectModal } from "@rainbow-me/rainbowkit";
 // Import the useDownloader hook for downloading files
 import { ethers } from "ethers";
 // Import ethers for interacting with Ethereum smart contracts
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // Import necessary hooks from React
 import useDownloader from "react-use-downloader";
 // Import toast for showing notifications
 // Import the useAccount hook to get the user's address
 import { useAccount } from "wagmi";
 import deployedContracts from "~~/contracts/deployedContracts";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
+
+// import { ADDRESS, ABI } from "../app/abi/index"; // Import contract address and ABI
 
 const ABI = deployedContracts[31337].Notary.abi;
 const ADDRESS = deployedContracts[31337].Notary.address;
@@ -54,6 +58,14 @@ const ListNotary = () => {
     MyDocuments(); // Call the MyDocuments function to retrieve user documents
   });
 
+  const { data } = useScaffoldReadContract({
+    contractName: "Notary",
+    functionName: "getAllDocuments",
+  });
+  if (data) {
+    // console.log(data,'hello')
+  }
+
   // Function to generate a random image URL with a unique seed based on the notary description
   const generateRandomImage = (title: string) => {
     const width = 400; // Define image width
@@ -80,10 +92,7 @@ const ListNotary = () => {
         openConnectModal();
         return;
       }
-      // const { data: notaryDocuments } = useScaffoldReadContract({
-      //   contractName: "Notary",
-      //   functionName: "getAllDocuments",
-      // });
+
       const provider = new ethers.providers.Web3Provider(connect); // Create Ethereum provider instance
       const signer = provider.getSigner(); // Get signer from provider
       const contract = new ethers.Contract(ADDRESS, ABI, signer); // Create contract instance
@@ -142,6 +151,7 @@ const ListNotary = () => {
     <div className="container docs-wrapper mb-8">
       <h2 className="mb-5 docs-h2 ">My Documents</h2>
       <div className="flex flex-wrap -mx-4">
+        <ToastContainer />
         {/* Check if documents array exists and has elements before mapping */}
         {documents && documents.length > 0 ? (
           documents.map(document => (
@@ -152,7 +162,13 @@ const ListNotary = () => {
             >
               <div className="card shadow">
                 {/* Replace the image source with document image URI */}
-                <Image src={generateRandomImage(document.description)} className="card-img-top" alt="Document" />
+                <Image
+                  width={300}
+                  height={300}
+                  src={generateRandomImage(document.description)}
+                  className="card-img-top image"
+                  alt="Document"
+                />
                 <div className="card-body p-2" style={{ background: "beige" }}>
                   {/* Display document owner */}
                   <h5 className=" text-lg">Owner: {`${document.owner.slice(0, 6)}...${document.owner.slice(-4)}`}</h5>

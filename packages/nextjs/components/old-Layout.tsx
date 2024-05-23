@@ -5,7 +5,7 @@ import { Header } from "./Header";
 interface Props {
   children: ReactNode;
 }
-const Layout: FC<Props> = ({ children }) => {
+const OldLayout: FC<Props> = ({ children }) => {
   return (
     <>
       <div className="bg-gypsum overflow-hidden flex flex-col min-h-screen bg-wrapper">
@@ -17,4 +17,4 @@ const Layout: FC<Props> = ({ children }) => {
   );
 };
 
-export default Layout;
+export default OldLayout;

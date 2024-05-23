@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { uploadFileToIPFS } from "../app/constants/pinata";
 import { ethers } from "ethers";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { useDebounce } from "use-debounce";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
@@ -90,6 +90,7 @@ const AddNotaryModal = () => {
   return (
     <div className="flex flex-row w-full justify-between">
       <div>
+        <ToastContainer />
         {/* Add Notary Button that opens the modal */}
         <button
           type="button"
