@@ -1,0 +1,32 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Notary
+    network: celo-alfajores
+    source:
+      address: "0xD8E9d99a7472588f89043FA7C639B3C94a551274"
+      abi: Notary
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - DocumentNotarized
+        - DocumentRetrieved
+        - DocumentRevoked
+      abis:
+        - name: Notary
+          file: ./abis/Notary.json
+      eventHandlers:
+        - event: DocumentNotarized(indexed address,indexed string,uint256,string,string)
+          handler: handleDocumentNotarized
+        - event: DocumentRetrieved(indexed address,indexed string,uint256)
+          handler: handleDocumentRetrieved
+        - event: DocumentRevoked(indexed address,indexed string,uint256)
+          handler: handleDocumentRevoked
+      file: ./src/notary.ts

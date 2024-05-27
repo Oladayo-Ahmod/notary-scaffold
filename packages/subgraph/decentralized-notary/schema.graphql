@@ -1,0 +1,31 @@
+type DocumentNotarized @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  documentHash: String! # string
+  timestamp: BigInt! # uint256
+  imageURI: String! # string
+  description: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type DocumentRetrieved @entity(immutable: true) {
+  id: Bytes!
+  requester: Bytes! # address
+  documentHash: String! # string
+  timestamp: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type DocumentRevoked @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  documentHash: String! # string
+  timestamp: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
