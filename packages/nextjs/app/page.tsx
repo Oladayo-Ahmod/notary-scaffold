@@ -7,6 +7,7 @@ import "../styles/globals.css";
 import "../styles/index.css";
 import "react-toastify/dist/ReactToastify.css";
 import { useAccount } from "wagmi";
+import ListAllNotary from "~~/components/ListAllNotary";
 
 export default function Home() {
   const { address, isConnected } = useAccount();
@@ -23,6 +24,7 @@ export default function Home() {
       )} */}
       </div>
       <ListNotary />
+      <ListAllNotary />
     </>
   );
 }

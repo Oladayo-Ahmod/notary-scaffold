@@ -17,7 +17,7 @@ Notary is a decentralized application (DApp) that facilitates the management and
 
 ## Tech Stack
 
-Notary DApp is built using the following technologies:
+Notary DApp is built on CELO Alfajores blockchain using the following technologies:
 
 - [Solidity](https://docs.soliditylang.org/): Programming language for Ethereum smart contracts.
 - [next js](https://reactjs.org/): JavaScript library for building user interfaces.
