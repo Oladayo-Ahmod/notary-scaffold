@@ -31,6 +31,28 @@ import { useFetchBlocks } from "~~/hooks/scaffold-eth";
 
 // @ts-nocheck
 
+// @ts-nocheck
+
+// @ts-nocheck
+
+// @ts-nocheck
+
+// @ts-nocheck
+
+// @ts-nocheck
+
+// @ts-nocheck
+
+// @ts-nocheck
+
+// @ts-nocheck
+
+// @ts-nocheck
+
+// @ts-nocheck
+
+// @ts-nocheck
+
 // Define types for props
 type AddressCodeTabProps = {
   bytecode: string;
