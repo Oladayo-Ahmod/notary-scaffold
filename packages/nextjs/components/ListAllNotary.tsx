@@ -73,7 +73,6 @@ const ListAllNotary = () => {
               style={{ color: "black", background: "transparent" }}
             >
               <div className="card shadow">
-                {/* Replace the image source with document image URI */}
                 <Image
                   width={300}
                   height={300}
