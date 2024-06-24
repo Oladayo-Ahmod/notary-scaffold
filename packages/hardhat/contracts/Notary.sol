@@ -23,7 +23,7 @@ contract Notary {
     // Events to log document actions
     event DocumentNotarized(address indexed owner, string indexed documentHash, uint256 timestamp, string imageURI, string description);
     event DocumentRetrieved(address indexed requester, string indexed documentHash, uint256 timestamp);
-    event DocumentRevoked(address indexed owner, string indexed documentHash, uint256 timestamp);
+    event DocumentRevoked(address indexed owner, string indexed documentHash, uint256 timestamp,string description,string imageURI);
 
     // Modifier to restrict access to the contract owner
     modifier onlyOwner() {
@@ -74,7 +74,10 @@ contract Notary {
     // Function to revoke a notarized document
     function revokeDocument(string memory _hash) public onlyDocumentOwner(_hash) documentNotRevoked(_hash) {
         documents[_hash].revoked = true;
-        emit DocumentRevoked(msg.sender, _hash, block.timestamp);
+        // uint256 description = documents[_hash].description;
+        // uint256 imageURI = documents[_hash].imageURI;
+
+        emit DocumentRevoked(msg.sender, _hash, block.timestamp,documents[_hash].description,documents[_hash].imageURI);
     }
 
     // Function to verify details of a document by its hash

@@ -29,3 +29,15 @@ type DocumentRevoked @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+
+type Query {
+  documentNotarizeds(first: Int, skip: Int, where: DocumentFilter, orderBy: String, orderDirection: String): [DocumentNotarized!]!
+  documentByHash(hash: String!): Document
+  documentsByOwner(owner: Bytes!, first: Int, skip: Int): [Document!]!
+}
+input DocumentFilter {
+  owner: Bytes
+  revoked: Boolean
+  timestamp_gt: BigInt
+  timestamp_lt: BigInt
+}
