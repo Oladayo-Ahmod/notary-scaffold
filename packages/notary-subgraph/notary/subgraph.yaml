@@ -8,9 +8,9 @@ dataSources:
     name: Notary
     network: celo-alfajores
     source:
-      address: "0xD8E9d99a7472588f89043FA7C639B3C94a551274"
+      address: "0x5635400f2586f91941a40a01C12d52F130F0E682"
       abi: Notary
-      startBlock: 24219508
+      startBlock: 0
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -27,6 +27,6 @@ dataSources:
           handler: handleDocumentNotarized
         - event: DocumentRetrieved(indexed address,indexed string,uint256)
           handler: handleDocumentRetrieved
-        - event: DocumentRevoked(indexed address,indexed string,uint256)
+        - event: DocumentRevoked(indexed address,indexed string,uint256,string,string)
           handler: handleDocumentRevoked
       file: ./src/notary.ts

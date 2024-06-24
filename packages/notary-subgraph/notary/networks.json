@@ -1,0 +1,8 @@
+{
+  "celo-alfajores": {
+    "Notary": {
+      "address": "0x5635400f2586f91941a40a01C12d52F130F0E682",
+      "startBlock": 0
+    }
+  }
+}

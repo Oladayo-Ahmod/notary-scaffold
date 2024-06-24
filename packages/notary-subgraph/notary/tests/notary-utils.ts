@@ -76,7 +76,9 @@ export function createDocumentRetrievedEvent(
 export function createDocumentRevokedEvent(
   owner: Address,
   documentHash: string,
-  timestamp: BigInt
+  timestamp: BigInt,
+  description: string,
+  imageURI: string
 ): DocumentRevoked {
   let documentRevokedEvent = changetype<DocumentRevoked>(newMockEvent())
 
@@ -96,6 +98,15 @@ export function createDocumentRevokedEvent(
       "timestamp",
       ethereum.Value.fromUnsignedBigInt(timestamp)
     )
+  )
+  documentRevokedEvent.parameters.push(
+    new ethereum.EventParam(
+      "description",
+      ethereum.Value.fromString(description)
+    )
+  )
+  documentRevokedEvent.parameters.push(
+    new ethereum.EventParam("imageURI", ethereum.Value.fromString(imageURI))
   )
 
   return documentRevokedEvent

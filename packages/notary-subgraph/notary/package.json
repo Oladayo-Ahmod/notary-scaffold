@@ -1,0 +1,18 @@
+{
+  "name": "notary",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ notary",
+    "create-local": "graph create --node http://localhost:8020/ notary",
+    "remove-local": "graph remove --node http://localhost:8020/ notary",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 notary",
+    "test": "graph test"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.72.2",
+    "@graphprotocol/graph-ts": "0.32.0"
+  },
+  "devDependencies": { "matchstick-as": "0.5.0" }
+}
