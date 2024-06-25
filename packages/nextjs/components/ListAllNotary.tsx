@@ -64,31 +64,31 @@ const ListAllNotary = () => {
     }
   `;
 
-  useEffect(() => {
+  // useEffect(() => {
+  client
+    .query({ query: GET_ITEMS })
+    .then(response => {
+      setDocuments(response.data.documentNotarizeds);
+    })
+    .catch(error => {
+      console.error("Error fetching notarized documents:", error);
+    });
+
+  if (address) {
     client
-      .query({ query: GET_ITEMS })
+      .query({
+        query: GET_REVOKED_ITEMS,
+        variables: { owner: address.toString() },
+      })
       .then(response => {
-        setDocuments(response.data.documentNotarizeds);
+        setMyRevokedDocuments(response.data.documentRevokeds);
+        // setDocuments(prevDocuments => [...prevDocuments, ...response.data.documentRevokeds]);
       })
       .catch(error => {
-        console.error("Error fetching notarized documents:", error);
+        console.error("Error fetching revoked documents:", error);
       });
-
-    if (address) {
-      client
-        .query({
-          query: GET_REVOKED_ITEMS,
-          variables: { owner: address.toString() },
-        })
-        .then(response => {
-          setMyRevokedDocuments(response.data.documentRevokeds);
-          // setDocuments(prevDocuments => [...prevDocuments, ...response.data.documentRevokeds]);
-        })
-        .catch(error => {
-          console.error("Error fetching revoked documents:", error);
-        });
-    }
-  });
+  }
+  // });
 
   return (
     <div className="container docs-wrapper mb-8">
