@@ -149,7 +149,7 @@ const ListNotary = () => {
 
   return (
     <div className="container docs-wrapper mb-8">
-      <h2 className="mb-5 docs-h2 ">My Documents</h2>
+      <h2 className="mb-5 docs-h2 ">{documents && documents.length > 0 ? "My Documents" : ""}</h2>
       <div className="flex flex-wrap -mx-4">
         <ToastContainer />
         {/* Check if documents array exists and has elements before mapping */}

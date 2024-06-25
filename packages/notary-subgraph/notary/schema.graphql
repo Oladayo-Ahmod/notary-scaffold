@@ -31,3 +31,30 @@ type DocumentRevoked @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+
+type Document @entity {
+  id: ID!
+  owner: Bytes!
+  hash: String!
+  timestamp: BigInt!
+  imageURI: String
+  description: String
+  revoked: Boolean!
+}
+
+type User @entity {
+  id: ID!
+  documents: [Document!]! @derivedFrom(field: "owner")
+}
+type Query {
+  documentNotarizeds(first: Int, skip: Int, where: DocumentFilter, orderBy: String, orderDirection: String): [DocumentNotarized!]!
+  documentByHash(hash: String!): Document
+  documentsByOwner(owner: Bytes!, first: Int, skip: Int): [Document!]!
+}
+
+input DocumentFilter {
+  owner: Bytes
+  revoked: Boolean
+  timestamp_gt: BigInt
+  timestamp_lt: BigInt
+}

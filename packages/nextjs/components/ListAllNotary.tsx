@@ -92,7 +92,9 @@ const ListAllNotary = () => {
 
   return (
     <div className="container docs-wrapper mb-8">
-      <h2 className="mb-5 docs-h2">My Revoked Documents</h2>
+      <h2 className="mb-5 docs-h2">
+        {myRevokedDocuments && myRevokedDocuments.length > 0 ? "My Revoked Documents" : ""}
+      </h2>
       <div className="flex flex-wrap -mx-4">
         {myRevokedDocuments && myRevokedDocuments.length > 0 ? (
           myRevokedDocuments.map(document => (
@@ -164,7 +166,7 @@ const ListAllNotary = () => {
                     disabled
                     className="my-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ms-2"
                   >
-                    Not Available for Download
+                    Unauthorized to Download
                   </button>
                   <a
                     href={`https://explorer.celo.org/alfajores/tx/${document.transactionHash}`}
