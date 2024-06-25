@@ -48,6 +48,7 @@ const ListAllNotary = () => {
     }
   `;
 
+  // current user revoked documents
   const GET_REVOKED_ITEMS = gql`
     query GetRevokedItems($owner: String!) {
       documentRevokeds(where: { owner: $owner }) {
@@ -91,10 +92,10 @@ const ListAllNotary = () => {
 
   return (
     <div className="container docs-wrapper mb-8">
-      <h2 className="mb-5 docs-h2">All Revoked Documents</h2>
+      <h2 className="mb-5 docs-h2">My Revoked Documents</h2>
       <div className="flex flex-wrap -mx-4">
-        {documents && documents.length > 0 ? (
-          documents.map(document => (
+        {myRevokedDocuments && myRevokedDocuments.length > 0 ? (
+          myRevokedDocuments.map(document => (
             <div
               key={document.id}
               className="drop-shadow-2xl w-full md:w-1/3 p-4"
@@ -132,7 +133,7 @@ const ListAllNotary = () => {
             </div>
           ))
         ) : (
-          <p className="docs-h2">There are no documents available</p>
+          <p className="docs-h2">You have no revoked documents</p>
         )}
       </div>
 
