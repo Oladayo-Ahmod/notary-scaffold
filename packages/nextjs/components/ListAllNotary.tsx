@@ -88,7 +88,7 @@ const ListAllNotary = () => {
           console.error("Error fetching revoked documents:", error);
         });
     }
-  }, [address]);
+  });
 
   return (
     <div className="container docs-wrapper mb-8">
