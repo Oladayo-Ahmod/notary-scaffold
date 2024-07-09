@@ -67,7 +67,7 @@ const ListAllNotary = () => {
 
   const SEARCH_DOCUMENTS_BY_DESCRIPTION = gql`
     query SearchDocumentsByDescription($description: String!) {
-      documents(where: { description_contains: $description }) {
+      documentNotarizeds(where: { description_contains: $description }) {
         id
         owner
         description
@@ -112,7 +112,9 @@ const ListAllNotary = () => {
         variables: { description: searchQuery },
       })
       .then(response => {
-        setSearchResults(response.data.documents);
+        console.log(response);
+
+        setSearchResults(response.data.documentNotarizeds);
       })
       .catch(error => {
         console.error("Error searching documents by description:", error);
