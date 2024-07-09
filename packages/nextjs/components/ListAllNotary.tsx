@@ -103,7 +103,7 @@ const ListAllNotary = () => {
           console.error("Error fetching revoked documents:", error);
         });
     }
-  }, [address]);
+  });
 
   const handleSearch = () => {
     client
