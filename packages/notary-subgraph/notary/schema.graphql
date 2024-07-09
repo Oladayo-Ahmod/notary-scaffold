@@ -40,16 +40,24 @@ type Document @entity {
   imageURI: String
   description: String
   revoked: Boolean!
+  notarizations: [DocumentNotarized!]! @derivedFrom(field: "documentHash")
+  retrievals: [DocumentRetrieved!]! @derivedFrom(field: "documentHash")
+  revocations: [DocumentRevoked!]! @derivedFrom(field: "documentHash")
 }
 
 type User @entity {
   id: ID!
   documents: [Document!]! @derivedFrom(field: "owner")
 }
+
 type Query {
   documentNotarizeds(first: Int, skip: Int, where: DocumentFilter, orderBy: String, orderDirection: String): [DocumentNotarized!]!
   documentByHash(hash: String!): Document
   documentsByOwner(owner: Bytes!, first: Int, skip: Int): [Document!]!
+  documentRetrieveds(first: Int, skip: Int, where: DocumentRetrievedFilter, orderBy: String, orderDirection: String): [DocumentRetrieved!]!
+  documentRevoked(first: Int, skip: Int, where: DocumentRevokedFilter, orderBy: String, orderDirection: String): [DocumentRevoked!]!
+  documentByDescription(description: String!, first: Int, skip: Int): [Document!]!
+  allUsers(first: Int, skip: Int): [User!]!
 }
 
 input DocumentFilter {
@@ -57,4 +65,18 @@ input DocumentFilter {
   revoked: Boolean
   timestamp_gt: BigInt
   timestamp_lt: BigInt
+  description_contains: String
+}
+
+input DocumentRetrievedFilter {
+  requester: Bytes
+  timestamp_gt: BigInt
+  timestamp_lt: BigInt
+}
+
+input DocumentRevokedFilter {
+  owner: Bytes
+  timestamp_gt: BigInt
+  timestamp_lt: BigInt
+  description_contains: String
 }
