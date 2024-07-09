@@ -19,8 +19,10 @@ interface NotaryDocument {
 const ListAllNotary = () => {
   const [documents, setDocuments] = useState<NotaryDocument[]>([]);
   const [myRevokedDocuments, setMyRevokedDocuments] = useState<NotaryDocument[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<NotaryDocument[]>([]);
+  const [descriptionSearchQuery, setDescriptionSearchQuery] = useState("");
+  const [ownerSearchQuery, setOwnerSearchQuery] = useState("");
+  const [descriptionSearchResults, setDescriptionSearchResults] = useState<NotaryDocument[]>([]);
+  const [ownerSearchResults, setOwnerSearchResults] = useState<NotaryDocument[]>([]);
   const { address } = useAccount();
 
   const generateRandomImage = (title: string) => {
@@ -80,6 +82,21 @@ const ListAllNotary = () => {
     }
   `;
 
+  const SEARCH_DOCUMENTS_BY_OWNER = gql`
+    query SearchDocumentsByOwner($owner: String!) {
+      documentNotarizeds(where: { owner: $owner }) {
+        id
+        owner
+        description
+        documentHash
+        timestamp
+        transactionHash
+        imageURI
+        blockTimestamp
+      }
+    }
+  `;
+
   useEffect(() => {
     client
       .query({ query: GET_ITEMS })
@@ -103,21 +120,35 @@ const ListAllNotary = () => {
           console.error("Error fetching revoked documents:", error);
         });
     }
-  });
+  }, [address]);
 
-  const handleSearch = () => {
+  const handleDescriptionSearch = () => {
     client
       .query({
         query: SEARCH_DOCUMENTS_BY_DESCRIPTION,
-        variables: { description: searchQuery },
+        variables: { description: descriptionSearchQuery },
       })
       .then(response => {
-        console.log(response);
-
-        setSearchResults(response.data.documentNotarizeds);
+        setOwnerSearchResults([]);
+        setDescriptionSearchResults(response.data.documentNotarizeds);
       })
       .catch(error => {
         console.error("Error searching documents by description:", error);
+      });
+  };
+
+  const handleOwnerSearch = () => {
+    client
+      .query({
+        query: SEARCH_DOCUMENTS_BY_OWNER,
+        variables: { owner: ownerSearchQuery },
+      })
+      .then(response => {
+        setDescriptionSearchResults([]);
+        setOwnerSearchResults(response.data.documentNotarizeds);
+      })
+      .catch(error => {
+        console.error("Error searching documents by owner:", error);
       });
   };
 
@@ -127,20 +158,84 @@ const ListAllNotary = () => {
         <input
           type="text"
           placeholder="Search by description"
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-          className="border p-2 mr-2"
+          value={descriptionSearchQuery}
+          onChange={e => setDescriptionSearchQuery(e.target.value)}
+          className="border text-white p-2 mr-2"
         />
-        <button onClick={handleSearch} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button
+          onClick={handleDescriptionSearch}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
           Search
         </button>
       </div>
 
-      {searchResults.length > 0 && (
+      <div className="mb-5">
+        <input
+          type="text"
+          placeholder="Search by owner address"
+          value={ownerSearchQuery}
+          onChange={e => setOwnerSearchQuery(e.target.value)}
+          className="border text-white p-2 mr-2"
+        />
+        <button
+          onClick={handleOwnerSearch}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Search
+        </button>
+      </div>
+
+      {descriptionSearchResults.length > 0 && (
         <div>
-          <h2 className="mb-5 docs-h2">Search Results</h2>
+          <h2 className="mb-5 docs-h2">Search Results by Description</h2>
           <div className="flex flex-wrap -mx-4">
-            {searchResults.map(document => (
+            {descriptionSearchResults.map(document => (
+              <div
+                key={document.id}
+                className="drop-shadow-2xl w-full md:w-1/3 p-4"
+                style={{ color: "black", background: "transparent" }}
+              >
+                <div className="card shadow">
+                  <Image
+                    width={300}
+                    height={300}
+                    src={generateRandomImage(document.description)}
+                    className="card-img-top image"
+                    alt="Document"
+                  />
+                  <div className="card-body p-2" style={{ background: "beige" }}>
+                    <h5 className="text-lg">Owner: {`${document.owner.slice(0, 6)}...${document.owner.slice(-4)}`}</h5>
+                    <p className="text-gray-600">Description: {document.description}</p>
+                    <p className="text-gray-600">
+                      Timestamp: {new Date(Number(document.timestamp) * 1000).toLocaleString()}
+                    </p>
+                    <button
+                      disabled
+                      className="my-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ms-2"
+                    >
+                      Unauthorized to Download
+                    </button>
+                    <a
+                      href={`https://explorer.celo.org/alfajores/tx/${document.transactionHash}`}
+                      target="_blank"
+                      className="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ms-2"
+                    >
+                      View on CELO explorer
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {ownerSearchResults.length > 0 && (
+        <div>
+          <h2 className="mb-5 docs-h2">Search Results by Owner</h2>
+          <div className="flex flex-wrap -mx-4">
+            {ownerSearchResults.map(document => (
               <div
                 key={document.id}
                 className="drop-shadow-2xl w-full md:w-1/3 p-4"
